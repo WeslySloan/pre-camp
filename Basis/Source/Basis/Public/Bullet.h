@@ -14,12 +14,12 @@ class BASIS_API ABullet : public AActor
 public:	
 	// Sets default values for this actor's properties
 	// Sets default values
-	ABullet()
-	{
-		// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-		PrimaryActorTick.bCanEverTick = true;
+	ABullet();
+	//{
+	//	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	//	PrimaryActorTick.bCanEverTick = true;
 
-	}
+	//}
 
 protected:
 	// Called when the game starts or when spawned

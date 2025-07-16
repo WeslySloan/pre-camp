@@ -41,15 +41,15 @@ void ABullet::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrim
 		return;
 	}
 
-	ACharacterBase* OwnerCB = Cast<ACharacterBase>(Actor->GetOwner());
-	if (!IsValid(OwnerCB))
+	ACharacterBase* CharacterOwner = Cast<ACharacterBase>(Actor->GetOwner());
+	if (!IsValid(CharacterOwner))
 	{
 		return;
 	}
 
 	if (IsValid(CB))
 	{
-		CB->Hit(OwnerCB->Strength, OwnerCB);
+		CB->Hit(CharacterOwner->Strength, CharacterOwner);
 	}
 
 }

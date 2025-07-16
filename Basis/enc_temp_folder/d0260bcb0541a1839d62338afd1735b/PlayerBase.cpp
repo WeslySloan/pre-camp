@@ -19,7 +19,7 @@ APlayerBase::APlayerBase()
 void APlayerBase::BeginPlay()
 {
 	Super::BeginPlay();
-    // staticclass() : 객체의 클래스정보를 반환. ( 런타임에 클래스를 나타내는 UClass 객체를 반환 )
+    // staticclass() : 객체의 클래스정보를 반환. ( 
     WeaponActor = GetWorld()->SpawnActor<AWeapon>(Weapon);
     if (IsValid(WeaponActor))
     {

@@ -30,8 +30,10 @@ private:
 	TObjectPtr<class UCameraComponent> FollowCamera;
 
 	UPROPERTY(EditAnywhere)
-	TObjectPtr<AWeapon> Weapon;
-	UPROPERTY(EditAnywhere)
+	TSubclassOf<AWeapon> Weapon;
+	// TSubclassOf : 클래스 정보를 가르킴 // 
+
+	UPROPERTY()
 	TObjectPtr<AWeapon> WeaponActor;
 
 	UPROPERTY(EditAnyWhere)
