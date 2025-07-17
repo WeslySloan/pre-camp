@@ -37,7 +37,7 @@ private:
 	TObjectPtr<AWeapon> WeaponActor;
 
 	UPROPERTY(EditAnyWhere)
-	TObjectPtr<UInputAction> MoveAction;
+	TObjectPtr<UInputAction> MoveAction; 
 	UPROPERTY(EditAnyWhere)
 	TObjectPtr<UInputAction> ZoomAction;
 	UPROPERTY(EditAnyWhere)

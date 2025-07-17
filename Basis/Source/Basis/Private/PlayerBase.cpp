@@ -5,6 +5,8 @@
 #include "Camera/CameraComponent.h"
 #include "EnhancedInputComponent.h"
 #include "Weapon.h"
+#include "EnhancedInputSubsystems.h"
+#include "InputMappingContext.h"
 
 // Sets default values
 APlayerBase::APlayerBase()
@@ -19,8 +21,20 @@ APlayerBase::APlayerBase()
 void APlayerBase::BeginPlay()
 {
 	Super::BeginPlay();
-    // staticclass() : 객체의 클래스정보를 반환. ( 런타임에 클래스를 나타내는 UClass 객체를 반환 )
+
+    APlayerController* PC = Cast<APlayerController>(GetController());
+    if (IsValid(PC))
+    {
+        ULocalPlayer* Player = PC->GetLocalPlayer();
+        if (UEnhancedInputLocalPlayerSubsystem* InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(Player))
+        {
+            InputSubsystem->AddMappingContext(InputMappingContext, 0);
+        }
+    }
+
     WeaponActor = GetWorld()->SpawnActor<AWeapon>(Weapon);
+    // staticclass() : 객체의 클래스정보를 반환. ( 런타임에 클래스를 나타내는 UClass 객체를 반환 )
+
     if (IsValid(WeaponActor))
     {
         FAttachmentTransformRules TransformRules(EAttachmentRule::SnapToTarget, true);
@@ -36,9 +50,9 @@ void APlayerBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &APlayerBase::Move);
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerBase::Move);
-		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &APlayerBase::Move);
-		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerBase::Move);
+		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerBase::Look);
+		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &APlayerBase::Fire);
+		EnhancedInputComponent->BindAction(ZoomAction, ETriggerEvent::Triggered, this, &APlayerBase::Zoom);
 	}
 }
 void APlayerBase::Hit(int32 Damage, AActor* ByWho)
@@ -87,7 +101,7 @@ void APlayerBase::Look(const FInputActionValue& Value)
     if (Controller != nullptr)
     {
         AddControllerYawInput(LookAxisVector.X);
-        AddControllerPitchInput(LookAxisVector.Y);
+        AddControllerPitchInput(-LookAxisVector.Y);
     }
 }
 
