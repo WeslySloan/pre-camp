@@ -5,10 +5,12 @@
 #include "CoreMinimal.h"
 #include "CharacterBase.h"
 #include "PlayerBase.generated.h"
+
  
 class UInputAction;
 struct FInputActionValue;
 class AWeapon;
+class UInputMappingContext; // 강의에 없던내용
 
 UCLASS()
 class BASIS_API APlayerBase : public ACharacterBase
@@ -35,6 +37,11 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<AWeapon> WeaponActor;
+
+	// Input Mapping Context를 추가합니다.
+	UPROPERTY(EditAnyWhere, Category = "Input") // 강의에 없던내용
+	TObjectPtr<UInputMappingContext> InputMappingContext; // 강의에 없던내용
+
 
 	UPROPERTY(EditAnyWhere)
 	TObjectPtr<UInputAction> MoveAction; 
